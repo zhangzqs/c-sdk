@@ -73,3 +73,15 @@ jobs:
           ./gtests/qiniu_test.exe --gtest_filter="UnitTest.*"
         shell: bash
         working-directory: ${{ env.buildDir }}
+      
+      - name: Build DLL
+        run: |
+          set -e
+          cmake --build ${{ env.buildDir }} --config Release
+        shell: bash
+      
+      - name: Upload DLL
+        uses: actions/upload-artifact@v3
+        with:
+          name: qiniu-sdk-library-x86_64.zip
+          path: ${{ env.buildDir }}/Release
